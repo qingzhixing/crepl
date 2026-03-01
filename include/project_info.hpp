@@ -12,7 +12,14 @@ public:
 	static const inline std::string project_name = "crepl";
 	static const inline std::string description = "C++ 实现的交互式的shell";
 	static inline const std::string ascii_art =
-		R"()";
+		R"( _______  ______    _______  _______  ___     
+|       ||    _ |  |       ||       ||   |    
+|       ||   | ||  |    ___||    _  ||   |    
+|       ||   |_||_ |   |___ |   |_| ||   |    
+|      _||    __  ||    ___||    ___||   |___ 
+|     |_ |   |  | ||   |___ |   |    |       |
+|_______||___|  |_||_______||___|    |_______|
+)";
 	static inline const std::string author = "qingzhixing";
 	static inline const std::string mail = "qzsqqmail@qq.com";
 	static inline const std::string license = "MIT License";
@@ -22,7 +29,7 @@ public:
 	static void PrintVersion()
 	{
 		std::cout << ascii_art << std::endl;
-		std::cout << std::format("🎃 {}: {}\n", project_name, description);
+		std::cout << std::format("🎹 {}: {}\n", project_name, description);
 		std::cout << std::format("⌨️ Author: {}\n", author);
 		std::cout << std::format("💌 Mail: {}\n", mail);
 		std::cout << std::format("👾 License: {}\n", license);

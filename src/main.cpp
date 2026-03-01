@@ -1,8 +1,9 @@
 #include <iostream>
+#include <project_info.hpp>
 using namespace std;
 
 int main()
 {
-	cout << "crepl" << endl;
+	ProjectInfo::PrintVersion();
 	return 0;
 }
