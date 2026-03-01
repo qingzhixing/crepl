@@ -317,7 +317,7 @@ static void notify_worker()
     // Signal the worker process--we must send tests array because
     // tests in the worker process may not be correctly initialized.
 
-    write(pipe_write, tests, sizeof(tests));
+    auto _ = write(pipe_write, tests, sizeof(tests));
     close(pipe_write);
 
     // Wait for the worker to complete
