@@ -19,7 +19,7 @@ void tk_add_test(struct tk_testcase t)
     static int ntests = 0;
 
     // Only add the test case when TestKit is enabled.
-    if (!getenv(TK_RUN) && !getenv(TK_VERBOSE))
+    if (!IsTestkitEnabled())
     {
         return;
     }

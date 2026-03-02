@@ -1,3 +1,6 @@
+#pragma once
+#ifndef TESTKIT_H
+#define TESTKIT_H
 /*
  *  _________  _______   ________  _________  ___  __    ___  _________
  * |\___   ___\\  ___ \ |\   ____\|\___   ___\\  \|\  \ |\  \|\___   ___\
@@ -265,3 +268,10 @@ struct tk_testcase
     /* Define the test function. */                                           \
     static void TK_UNIQUE_NAME(name_)(body_arg)
 // Followed by the test case body { ... }
+
+inline bool IsTestkitEnabled()
+{
+    return getenv(TK_RUN) || getenv(TK_VERBOSE);
+}
+
+#endif //! TESTKIT_H
