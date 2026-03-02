@@ -3,24 +3,28 @@
 #define RUNTIME_REGISTRAR_HPP
 
 #include <string>
+#include <iostream>
 
 class RuntimeRegistrar
 {
 public:
-	void ProcessLine(const std::string &input_line)
+	static void ProcessLine(const std::string &input_line)
 	{
 	}
 
-	bool IsFunctionValid(const std::string &input_line)
+	static bool IsFunctionValid(const std::string &input_line)
 	{
+		return false;
 	}
 
-	bool IsExpressionValid(const std::string &input_line)
+	static bool IsExpressionValid(const std::string &input_line)
 	{
+		return false;
 	}
 
-	bool IsLineAFunction(const std::string &input_line)
+	static bool IsLineAFunction(const std::string &input_line)
 	{
+		return false;
 	}
 };
 
