@@ -35,22 +35,5 @@ public:
 			}
 		}
 	}
-
-private:
-	void HandleInputLine(const std::string &input_line)
-	{
-	}
-
-	bool IsFunctionValid(const std::string &input_line)
-	{
-	}
-
-	bool IsExpressionValid(const std::string &input_line)
-	{
-	}
-
-	void IsLineAFunction(const std::string &input_line)
-	{
-	}
 };
 #endif //! INPUT_HANDLER_HPP
