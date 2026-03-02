@@ -1,6 +1,7 @@
 #include <iostream>
 #include <argument_handler.hpp>
 #include <project_info.hpp>
+#include <input_handler.hpp>
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +17,6 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	std::cout << "Welcome to " << ProjectInfo::project_name << "!" << std::endl;
+	InputHandler::HandleInput();
 	return 0;
 }
