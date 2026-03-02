@@ -31,8 +31,7 @@ def main():
     subprocess.run(["valgrind", "--tool=memcheck",
                     "--show-leak-kinds=all", "--leak-check=full",
                     "-q",
-                    "./crepl"], cwd="./build", check=False)
-    
+                    "./crepl","-v"], cwd="./build", check=False)
     print("✅ valgrind运行结束")
 
     print("✨ 脚本运行完毕!")
