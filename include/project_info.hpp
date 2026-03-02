@@ -38,6 +38,12 @@ public:
 
 	static void PrintHelp()
 	{
+		std::cout << std::format("{} - {}\n", project_name, description);
+		std::cout << "Usage:\n";
+		std::cout << "  crepl [options]\n\n";
+		std::cout << "Options:\n";
+		std::cout << "  -h, --help      Show this help message and exit\n";
+		std::cout << "  -v, --version   Show version information and exit\n";
 	}
 };
 
