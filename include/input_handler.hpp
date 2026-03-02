@@ -19,14 +19,18 @@ public:
 			std::cout << std::format("\n✨{}> ", ProjectInfo::project_name);
 			std::string input;
 			std::getline(std::cin, input);
+
+			// 优先判断输入结束
+			if (std::cin.fail() || std::cin.eof())
+			{
+				std::cout << "\n🤩 Input error or EOF detected. Exiting...\n";
+				continue_flag = false;
+				continue;
+			}
+
 			input = Trim(input);
 			if (input.empty())
 			{
-				continue;
-			}
-			if (std::cin.fail())
-			{
-				continue_flag = false;
 				continue;
 			}
 			std::cout << std::format("read: {}\n", input);
