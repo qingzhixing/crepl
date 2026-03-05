@@ -7,6 +7,7 @@
 #include <format>
 #include <project_info.hpp>
 #include <utilities.hpp>
+#include <runtime_registrar.hpp>
 
 class InputHandler
 {
@@ -33,6 +34,8 @@ public:
 			{
 				continue;
 			}
+
+			RuntimeRegistrar::ProcessLine(input_line);
 		}
 	}
 };
