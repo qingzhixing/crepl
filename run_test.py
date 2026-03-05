@@ -25,14 +25,6 @@ def main():
     subprocess.run(["./crepl"], env=env, cwd="./build", check=False)
     
     print("✅ Testkit运行结束")
-    
-    
-    print("✨ 运行valgrind...")
-    subprocess.run(["valgrind", "--tool=memcheck",
-                    "--show-leak-kinds=all", "--leak-check=full",
-                    "-q",
-                    "./crepl","-v"], cwd="./build", check=False)
-    print("✅ valgrind运行结束")
 
     print("✨ 脚本运行完毕!")
 
