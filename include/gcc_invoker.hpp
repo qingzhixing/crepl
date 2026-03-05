@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GPP_INVOKER_HPP
-#define GPP_INVOKER_HPP
+#ifndef GCC_INVOKER_HPP
+#define GCC_INVOKER_HPP
 
 #include <string>
 #include <unistd.h>
@@ -13,7 +13,7 @@
  *
  * g++ -shared -fPIC -Wno-implicit-function-declaration -o <临时.so> <临时.cpp>
  */
-class GppInvoker
+class GccInvoker
 {
 public:
 	static bool CompileFile(const std::string &source_file, const std::string &output_file)
@@ -26,7 +26,7 @@ public:
 		}
 
 		char *const exec_argv[] = {
-			strdup("g++"),
+			strdup("gcc"),
 			strdup("-shared"),
 			strdup("-fPIC"),
 			strdup("-Wno-implicit-function-declaration"),
@@ -43,9 +43,9 @@ public:
 		if (pid == 0)
 		{
 			// Child Process
-			execve("/usr/bin/g++", exec_argv, exec_envp);
+			execve("/usr/bin/gcc", exec_argv, exec_envp);
 			perror("execve");
-			std::cerr << "❌ 子进程调用g++失败, 可能是你的系统中未安装g++工具." << std::endl;
+			std::cerr << "❌ 子进程调用gcc失败, 可能是你的系统中未安装gcc工具." << std::endl;
 		}
 		// Parent Process
 		int status;
@@ -60,13 +60,13 @@ public:
 			int exit_status = WEXITSTATUS(status);
 			if (exit_status != 0)
 			{
-				std::cerr << "❌ g++ 编译失败, 退出状态码: " << exit_status << std::endl;
+				std::cerr << "❌ gcc 编译失败, 退出状态码: " << exit_status << std::endl;
 				return false;
 			}
 		}
 		else
 		{
-			std::cerr << "❌ g++ 编译失败, 子进程异常退出." << std::endl;
+			std::cerr << "❌ gcc 编译失败, 子进程异常退出." << std::endl;
 			return false;
 		}
 
@@ -74,4 +74,4 @@ public:
 	}
 };
 
-#endif //! GPP_INVOKER_HPP
+#endif //! GCC_INVOKER_HPP
