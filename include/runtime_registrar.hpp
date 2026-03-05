@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 #include <utility>
+#include <unistd.h>
+#include <cstdlib>
 
 class RuntimeRegistrar
 {
@@ -46,6 +48,12 @@ public:
 	 */
 	static bool RegisterFunction(const std::string &input_line)
 	{
+		auto [fd, file_name] = GenerateOpenUniqueCpp();
+		if (fd < 0)
+		{
+			return false;
+		}
+		auto success = write(fd, input_line.c_str(), sizeof(input_line.c_str()));
 	}
 
 	/**
@@ -56,21 +64,33 @@ public:
 	 */
 	static std::pair<bool, int> RegisterRunExpression(const std::string &input_line)
 	{
-	}
-
-	static bool IsFunctionValid(const std::string &input_line)
-	{
-		return false;
-	}
-
-	static bool IsExpressionValid(const std::string &input_line)
-	{
-		return false;
+		auto [fd, file_name] = GenerateOpenUniqueCpp();
+		if (fd < 0)
+		{
+			return {false, 0};
+		}
 	}
 
 	static bool IsLineAFunction(const std::string &input_line)
 	{
-		return false;
+		return input_line.starts_with("int ");
+	}
+
+	/**
+	 * @brief 生成一个唯一的Cpp文件并返回其文件描述符
+	 *
+	 * @return int 唯一Cpp文件的文件描述符
+	 */
+	static std::pair<int, std::string> GenerateOpenUniqueCpp()
+	{
+		char file_name[] = "/tmp/crepl-XXXXXX.cpp";
+		int fd = mkstemps(file_name, 4); // 4 是 ".cpp" 的长度
+		if (fd < 0)
+		{
+			perror("mkstemps");
+		}
+		std::string file_name_str = file_name;
+		return {fd, file_name_str};
 	}
 };
 
