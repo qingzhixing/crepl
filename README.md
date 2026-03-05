@@ -1,4 +1,4 @@
-# 🎹M4: C Read-Eval-Print-Loop (crepl)
+# 🎹 M4: C Read-Eval-Print-Loop (crepl)
 
 ## ✨ 项目介绍
 
