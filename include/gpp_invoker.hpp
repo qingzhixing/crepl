@@ -18,12 +18,19 @@ class GppInvoker
 public:
 	static bool CompileFile(const std::string &source_file, const std::string &output_file)
 	{
+		int pid = fork();
+		if (pid < 0)
+		{
+			perror("fork");
+			return false;
+		}
+
 		char *const exec_argv[] = {
-			"g++",
-			"-shared",
-			"-fPIC",
-			"-Wno-implicit-function-declaration",
-			"-o",
+			strdup("g++"),
+			strdup("-shared"),
+			strdup("-fPIC"),
+			strdup("-Wno-implicit-function-declaration"),
+			strdup("-o"),
 			strdup(output_file.c_str()),
 			strdup(source_file.c_str()),
 			nullptr,
@@ -33,12 +40,6 @@ public:
 			NULL,
 		};
 
-		int pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			return false;
-		}
 		if (pid == 0)
 		{
 			// Child Process
