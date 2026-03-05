@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <gcc_invoker.hpp>
+#include <dlfcn.h>
 
 class RuntimeRegistrar
 {
@@ -28,8 +29,9 @@ public:
 		}
 		std::string file_name_str = file_name;
 		auto file_name_without_sfx = file_name_str.substr(0, file_name_str.size() - 2);
-		std::cout << std::format("📃Created File: {}\n📎Generating: {}.so",
-								 file_name_str, file_name_without_sfx)
+		auto shared_object_name = file_name_without_sfx + ".so";
+		std::cout << std::format("📃Created File: {}\n📎Generating: {}",
+								 file_name_str, shared_object_name)
 				  << std::endl;
 
 		// Check whether it's a function or an expression
@@ -53,12 +55,36 @@ public:
 		write(fd, code_content.c_str(), code_content.size());
 
 		// Compile
-		auto compile_result = GccInvoker::CompileFile(file_name_str, file_name_without_sfx + ".so");
+		auto compile_result = GccInvoker::CompileFile(file_name_str, shared_object_name);
 		if (!compile_result)
 		{
 			std::cerr << "❌ 编译失败, 无法注册函数/表达式." << std::endl;
 			close(fd);
 			return;
+		}
+
+		// Load shared object
+		std::cout << std::format("📚Loading: {}", shared_object_name) << std::endl;
+		void *handle = dlopen(shared_object_name.c_str(), RTLD_LAZY | RTLD_GLOBAL);
+		if (!handle)
+		{
+			std::cerr << "❌ dlopen failed: " << dlerror() << std::endl;
+			return;
+		}
+
+		// Run expression
+		if (!is_function)
+		{
+			typedef int (*expression_func)();
+			auto expr_func = (expression_func)dlsym(handle, expression_func_name.c_str());
+			if (!expr_func)
+			{
+				std::cerr << "❌ dlsym failed: " << dlerror() << std::endl;
+				dlclose(handle);
+				return;
+			}
+			int result = expr_func();
+			std::cout << std::format("✅ 表达式结果: {}", result) << std::endl;
 		}
 
 		close(fd);
