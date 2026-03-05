@@ -24,7 +24,7 @@ public:
 			// 优先判断输入结束
 			if (std::cin.fail() || std::cin.eof())
 			{
-				std::cout << "\n🤩 Input error or EOF detected. Exiting...\n";
+				std::cout << "\n😎 Exiting...\n";
 				continue_flag = false;
 				continue;
 			}
